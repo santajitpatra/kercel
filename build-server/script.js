@@ -38,6 +38,8 @@ async function init() {
     for (const file of distFolderContents) {
       if (fs.lstatSync(filePath).isDirectory()) continue;
 
+      console.log("uploading", filePath);
+
       const command = new PutObjectCommand({
         Bucket: "",
         Key: `__outputs/${PROJECT_ID}/${file}`,
@@ -46,6 +48,7 @@ async function init() {
       });
 
       await s3Client.send(command);
+      console.log("uploaded", filePath);
     }
     console.log("Done...");
   });
